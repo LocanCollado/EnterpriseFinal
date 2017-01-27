@@ -4,6 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
+//clients
+
+//admins
+
 namespace ExperimentalProc
 {
     class Data
@@ -15,25 +20,49 @@ namespace ExperimentalProc
         }
     }
 
-    class Student : Data
+    class Client : Data
     {
-        //anything to be inherited by all students go in this class
+        //anything to be inherited by all clients go in this class
 
-        private string StudentName = null;
+        private string UserID = null;
+        private string UserName = null;//these will eventually be used to temporailly store data retrived from database
+        //lastname
+        //firstname
+        private string Password = null;
 
-        protected Student()//Student class constructor
+        protected Client(string UserName,string Password)//client class constructor
         {
-
+            this.UserName = UserName;
+            this.Password = Password;
         }
 
-        public void setStudentName(string StudentName)
+        public void setUserName(string UserName)
         {
-            this.StudentName = StudentName;
+            this.UserName = UserName;
         }
 
-        public string getStudentName()
+        public string getUserName()
         {
-            return StudentName;
+            return UserName;
         }
+
+        public void setPassword(string Password)
+        {
+            this.Password = Password;
+        }
+
+        public string getPassword()
+        {
+            return Password;
+        }
+
+        
     }
+
+    
+    
+
+    
+
+    
 }
