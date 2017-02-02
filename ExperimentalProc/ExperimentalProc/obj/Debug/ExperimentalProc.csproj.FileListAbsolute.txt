@@ -4,3 +4,6 @@ c:\users\da8\documents\visual studio 2015\Projects\ExperimentalProc\Experimental
 c:\users\da8\documents\visual studio 2015\Projects\ExperimentalProc\ExperimentalProc\obj\Debug\ExperimentalProc.csprojResolveAssemblyReference.cache
 c:\users\da8\documents\visual studio 2015\Projects\ExperimentalProc\ExperimentalProc\obj\Debug\ExperimentalProc.exe
 c:\users\da8\documents\visual studio 2015\Projects\ExperimentalProc\ExperimentalProc\obj\Debug\ExperimentalProc.pdb
+E:\Extrnl-Code file\EnterpriseApps\EnterpriseFinal-Developement\ExperimentalProc\ExperimentalProc\bin\Debug\ExperimentalProc.exe.config
+E:\Extrnl-Code file\EnterpriseApps\EnterpriseFinal-Developement\ExperimentalProc\ExperimentalProc\obj\Debug\ExperimentalProc.exe
+E:\Extrnl-Code file\EnterpriseApps\EnterpriseFinal-Developement\ExperimentalProc\ExperimentalProc\obj\Debug\ExperimentalProc.pdb
