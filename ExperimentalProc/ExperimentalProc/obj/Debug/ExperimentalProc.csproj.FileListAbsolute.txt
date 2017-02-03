@@ -11,3 +11,13 @@ E:\Extrnl-Code file\EnterpriseApps\EnterpriseFinal-Developement\ExperimentalProc
 E:\Extrnl-Code file\EnterpriseApps\EnterpriseFinal-Developement\ExperimentalProc\ExperimentalProc\bin\Debug\ExperimentalProc.pdb
 E:\Extrnl-Code file\EnterpriseApps\EnterpriseFinal-Developement\ExperimentalProc\ExperimentalProc\bin\Debug\MySql.Data.dll
 E:\Extrnl-Code file\EnterpriseApps\EnterpriseFinal-Developement\ExperimentalProc\ExperimentalProc\obj\Debug\ExperimentalProc.csprojResolveAssemblyReference.cache
+F:\Extrnl-Code file\EnterpriseApps\EnterpriseFinal-DanielAirgood-DataBase\ExperimentalProc\ExperimentalProc\bin\Debug\ExperimentalProc.exe.config
+F:\Extrnl-Code file\EnterpriseApps\EnterpriseFinal-DanielAirgood-DataBase\ExperimentalProc\ExperimentalProc\obj\Debug\ExperimentalProc.exe
+F:\Extrnl-Code file\EnterpriseApps\EnterpriseFinal-DanielAirgood-DataBase\ExperimentalProc\ExperimentalProc\obj\Debug\ExperimentalProc.pdb
+E:\Extrnl-Code file\EnterpriseApps\EnterpriseFinal-DanielAirgood-DataBase\ExperimentalProc\ExperimentalProc\bin\Debug\ExperimentalProc.exe.config
+E:\Extrnl-Code file\EnterpriseApps\EnterpriseFinal-DanielAirgood-DataBase\ExperimentalProc\ExperimentalProc\obj\Debug\ExperimentalProc.exe
+E:\Extrnl-Code file\EnterpriseApps\EnterpriseFinal-DanielAirgood-DataBase\ExperimentalProc\ExperimentalProc\obj\Debug\ExperimentalProc.pdb
+E:\Extrnl-Code file\EnterpriseApps\EnterpriseFinal-DanielAirgood-DataBase\ExperimentalProc\ExperimentalProc\bin\Debug\ExperimentalProc.exe
+E:\Extrnl-Code file\EnterpriseApps\EnterpriseFinal-DanielAirgood-DataBase\ExperimentalProc\ExperimentalProc\bin\Debug\ExperimentalProc.pdb
+E:\Extrnl-Code file\EnterpriseApps\EnterpriseFinal-DanielAirgood-DataBase\ExperimentalProc\ExperimentalProc\bin\Debug\MySql.Data.dll
+E:\Extrnl-Code file\EnterpriseApps\EnterpriseFinal-DanielAirgood-DataBase\ExperimentalProc\ExperimentalProc\obj\Debug\ExperimentalProc.csprojResolveAssemblyReference.cache

@@ -4,14 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ExperimentalProc.Calandar
+namespace ExperimentalProc
 {
-    //used by rooms to hold information
-    class Class : Data
+    class Student : Data
     {
-        public string classID;
+        protected List<Calandar.Class> ClassesList;
 
-        public Class()
+        public Student()
         {
 
         }
