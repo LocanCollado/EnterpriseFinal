@@ -10,9 +10,13 @@ namespace ExperimentalProc.Calandar
     //this should be fixed before alpha version
     class Calandar : Data
     {
+    /*Will organize Month/Week/Day on back end so database dosen't NEED to differentiate them but it would be helpfull
+    what i need right now is the ability to add a specificy day that contains enough information to place it on a gregorian calandar
+    and add it to the database, it will also need to have the ablity to a relation with a variable number of room dataObjects
+    */
         private struct Month
         {
-
+            
         }
 
         private struct Week
