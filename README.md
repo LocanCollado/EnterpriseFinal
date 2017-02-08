@@ -13,3 +13,6 @@ TODO:
 
 TASK CLAIM:
 Dan:organize files and attempt to keep some sembalance of standards to allow for smooth merging
+
+BETA PLAN:
+Database config option for room name/number
