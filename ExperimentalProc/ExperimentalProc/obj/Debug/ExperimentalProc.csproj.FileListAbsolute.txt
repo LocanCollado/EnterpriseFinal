@@ -21,3 +21,7 @@ E:\Extrnl-Code file\EnterpriseApps\EnterpriseFinal-DanielAirgood-DataBase\Experi
 E:\Extrnl-Code file\EnterpriseApps\EnterpriseFinal-DanielAirgood-DataBase\ExperimentalProc\ExperimentalProc\bin\Debug\ExperimentalProc.pdb
 E:\Extrnl-Code file\EnterpriseApps\EnterpriseFinal-DanielAirgood-DataBase\ExperimentalProc\ExperimentalProc\bin\Debug\MySql.Data.dll
 E:\Extrnl-Code file\EnterpriseApps\EnterpriseFinal-DanielAirgood-DataBase\ExperimentalProc\ExperimentalProc\obj\Debug\ExperimentalProc.csprojResolveAssemblyReference.cache
+F:\Extrnl-Code file\EnterpriseApps\EnterpriseFinal-DanielAirgood-DataBase\ExperimentalProc\ExperimentalProc\bin\Debug\ExperimentalProc.exe
+F:\Extrnl-Code file\EnterpriseApps\EnterpriseFinal-DanielAirgood-DataBase\ExperimentalProc\ExperimentalProc\bin\Debug\ExperimentalProc.pdb
+F:\Extrnl-Code file\EnterpriseApps\EnterpriseFinal-DanielAirgood-DataBase\ExperimentalProc\ExperimentalProc\bin\Debug\MySql.Data.dll
+F:\Extrnl-Code file\EnterpriseApps\EnterpriseFinal-DanielAirgood-DataBase\ExperimentalProc\ExperimentalProc\obj\Debug\ExperimentalProc.csprojResolveAssemblyReference.cache

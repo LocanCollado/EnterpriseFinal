@@ -4,8 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MySql.Data;
-using MySql.Data.MySqlClient;
+using MySql.Data.MySqlClient;//depriciated
 using System.IO;
+using System.Data.SqlClient;
 
 
 namespace ExperimentalProc.DataBase
@@ -13,7 +14,7 @@ namespace ExperimentalProc.DataBase
     class Server
     {
         private string DataBaseConectionString = null;
-        protected MySqlConnection connection;
+        protected SqlConnection connection;
         public Server()
         {
 
@@ -31,11 +32,14 @@ namespace ExperimentalProc.DataBase
             
             try
             {
-                connection = new MySqlConnection(DataBaseConectionString);
+                connection = new SqlConnection();
+                connection.ConnectionString = DataBaseConectionString;
                 System.Console.WriteLine("Connection Made");
+                System.Console.WriteLine(DataBaseConectionString);
             }
             catch(MySqlException excp)
             {
+                System.Console.WriteLine(DataBaseConectionString);
                 System.Console.WriteLine("Connection Failed: " + excp);
             }
             
@@ -43,15 +47,16 @@ namespace ExperimentalProc.DataBase
 
         public Boolean InsertIntoDataBase()
         {
-            MySqlCommand cmd = new MySqlCommand();
-            cmd.Connection = connection;
-            cmd.CommandText = "CREATE TABLE Enrollment(FirstName nvarchar(20), LastName nvarchar(20), UserID char(4));";//alter this to be an insert statment
+            
             try
             {
                 connection.Open();
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = connection;
+                cmd.CommandText = "INSERT INTO Rooms (Room_ID,Room_Name) VALUES("+ 404 +","+ "Art Room" +"); ";//alter this to be an insert statment
                 cmd.ExecuteNonQuery();
             }
-            catch(MySqlException excp)
+            catch(SqlException excp)
             {
                 System.Console.WriteLine("Failed to run InsertIntoDataBase: " + excp);
                 connection.Close();

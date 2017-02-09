@@ -12,6 +12,7 @@ namespace ExperimentalProc.Calandar
     class Room : Data
     {
         public string roomID = null;
+        public string roomName = null;
 
         public Room()
         {
