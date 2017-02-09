@@ -49,6 +49,7 @@
   <ItemGroup>
     <Compile Include="Calandar\Calandar.cs" />
     <Compile Include="Calandar\Class.cs" />
+    <Compile Include="Calandar\Organize\FormatCalandar.cs" />
     <Compile Include="Calandar\Room.cs" />
     <Compile Include="Data.cs" />
     <Compile Include="DataBase\Encypter.cs" />

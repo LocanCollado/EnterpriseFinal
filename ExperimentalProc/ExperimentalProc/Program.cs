@@ -12,7 +12,9 @@ namespace ExperimentalProc
         static void Main(string[] args)//Testing stuff
         {
             
-            DataBase.Server test = new DataBase.Server();//seems to be working fine, haven't tested executing a command though
+            DataBase.Server test = new DataBase.Server();
+
+            test.InsertIntoDataBase();
 
             System.Console.WriteLine("Hello, world! again edit");
         }
