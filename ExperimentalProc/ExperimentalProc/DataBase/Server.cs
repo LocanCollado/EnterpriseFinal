@@ -7,6 +7,9 @@ using MySql.Data;
 using MySql.Data.MySqlClient;//depriciated
 using System.IO;
 using System.Data.SqlClient;
+using System.Globalization;
+using System.Globalization;
+
 
 
 namespace ExperimentalProc.DataBase
@@ -45,7 +48,8 @@ namespace ExperimentalProc.DataBase
             
         }
 
-        public Boolean InsertIntoDataBase()
+        //generic insert into database statment
+        public bool InsertIntoDataBase()
         {
             
             try
@@ -53,7 +57,7 @@ namespace ExperimentalProc.DataBase
                 connection.Open();
                 SqlCommand cmd = new SqlCommand();
                 cmd.Connection = connection;
-                cmd.CommandText = "INSERT INTO Rooms (Room_ID,Room_Name) VALUES("+ 404 +","+ "Art Room" +"); ";//alter this to be an insert statment
+                cmd.CommandText = "INSERT INTO Rooms (Room_ID,Room_Name) VALUES("+ (int) 404 +","+ "'Art Room'" +"); ";//alter this to be an insert statment
                 cmd.ExecuteNonQuery();
             }
             catch(SqlException excp)
@@ -64,6 +68,154 @@ namespace ExperimentalProc.DataBase
             }
 
             connection.Close();
+            return true;
+        }
+
+        public bool InsertSchedualItem(string year, string month, string week, string day, string room, string course)
+        {
+
+            //Convert Year Logic
+            int yearParse;
+            if(int.TryParse(year,out yearParse))
+            {
+                //Pre insert Year Logic Here:
+
+            }else
+            {
+                System.Console.WriteLine("Failed to Parse <STRING_YEAR: "+ year +"> too INT");
+                return false;
+            }
+
+
+            //Convert Month Logic
+            int monthParse;
+            if (int.TryParse(month, out monthParse))
+            {
+                //Pre insert Month Logic Here:
+
+            }else if(month == null)
+            {
+                monthParse = 0;
+            }else
+            {
+                System.Console.WriteLine("Failed to Parse <STRING_MONTH: " + month + "> too INT");
+                return false;
+            }
+
+
+            //Convert Week Logic
+            int weekParse;
+            if (int.TryParse(week, out weekParse))
+            {
+                //Pre insert Day Logic Here:
+
+            }
+            else if (week == null)
+            {
+                weekParse = 0;
+            }
+            else
+            {
+                System.Console.WriteLine("Failed to Parse <STRING_WEEK: " + week + "> too INT");
+                return false;
+            }
+
+
+            
+            //Convert Day Logic
+            int dayParse;
+            if (int.TryParse(day, out dayParse))
+            {
+                //Pre insert Day Logic Here:
+
+            }
+            else if (day == null)
+            {
+                dayParse = 0;
+            }
+            else
+            {
+                System.Console.WriteLine("Failed to Parse <STRING_DAY: " + day + "> too INT");
+                return false;
+            }
+
+
+            //Convert Room Logic
+            int roomParse;
+            if (int.TryParse(room, out roomParse))
+            {
+                //Pre insert Room Logic Here:
+
+            }
+            else if (room == null)
+            {
+                roomParse = 0;
+            }
+            else
+            {
+                System.Console.WriteLine("Failed to Parse <STRING_ROOM: " + room + "> too INT");
+                return false;
+            }
+
+
+            //Convert Week Logic
+            int courseParse;
+            if (int.TryParse(course, out courseParse))
+            {
+                //Pre insert Course Logic Here:
+
+            }
+            else if (course == null)
+            {
+                courseParse = 0;
+            }
+            else
+            {
+                System.Console.WriteLine("Failed to Parse <STRING_COURSE: " + course + "> too INT");
+                return false;
+            }
+
+            GregorianCalendar GC = new GregorianCalendar();
+            int nonSpecMonth = 1;
+            int nonSpecWeek = 1;
+            int nonSpecDay = 1;
+
+            for (int i = 0; i <= GC.GetDaysInYear(yearParse); i++)
+            {
+
+
+                if (monthParse == 0)//month not specified
+                {
+                    if (weekParse == 0)//week not specified
+                    {
+                        if (dayParse == 0)//day not specified
+                        {
+
+                        }//end day not specified
+
+                    }//end week not specified
+
+                }//end month not specified
+
+            }//for days in year
+
+            
+
+            try
+            {
+                connection.Open();
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = connection;
+                cmd.CommandText = null;//update with SQL insert statment
+                cmd.ExecuteNonQuery();
+            }
+            catch (SqlException excp)
+            {
+                System.Console.WriteLine("Failed to run InsertIntoDataBase: " + excp);
+                connection.Close();
+                return false;
+            }
+
             return true;
         }
 
