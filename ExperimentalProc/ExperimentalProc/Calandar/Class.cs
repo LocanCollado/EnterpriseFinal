@@ -8,6 +8,9 @@ namespace ExperimentalProc.Calandar
 {
     //used by Room.cs to hold information
     //used by Student.cs
+
+        //DEPRICIATED
+
     class Class : Data
     {
         public string classID;

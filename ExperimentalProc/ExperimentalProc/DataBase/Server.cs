@@ -8,7 +8,7 @@ using MySql.Data.MySqlClient;//depriciated
 using System.IO;
 using System.Data.SqlClient;
 using System.Globalization;
-using System.Globalization;
+
 
 
 
@@ -71,6 +71,23 @@ namespace ExperimentalProc.DataBase
             return true;
         }
 
+
+        /*
+         Attempts a brute force insert of all data considered valid by target parameters.
+         Does not check against data inside database.
+         If a target parameters are not valid within given context, function will imediantly terminate and no data will be inserted into database [returns false].
+             
+             Parmeters(implicit):
+             Target Database: Defined by [DataBase Connetion String] in [DataBase/DataBaseConfig.txt]
+
+             Parmeters(defined):
+             year(string): target year for upload into database. used by (Calander Logic) and [Calandar/CalanderFormater.cs]
+             month(string): target month to upload target data. if left as (null) or (0) all months will be targeted
+             week(string): target day of week to upload target data. if left as (null) or (0) all weeks will be targeted
+             day(string): target day of target month(s) to upload target data. if left as (null) or (0) all days will be targeted
+             room(string): roomID of target data to upload into database
+             course(string): courseID of target data to upload into database
+             */
         public bool InsertSchedualItem(string year, string month, string week, string day, string room, string course)
         {
 
@@ -175,12 +192,19 @@ namespace ExperimentalProc.DataBase
                 return false;
             }
 
+            //Dan : Calandar logic
+
+            //TODO: paused work on this funtion here untill Data/Calandar/CalandarFormater.cs can be used to handle finding valid days logic
+            //Should be ready to impliment, still needs to be tested though
+
+            //Dan : find valid days logic
+            SqlCommand cmd = new SqlCommand();
             GregorianCalendar GC = new GregorianCalendar();
             int nonSpecMonth = 1;
             int nonSpecWeek = 1;
             int nonSpecDay = 1;
-
-            for (int i = 0; i <= GC.GetDaysInYear(yearParse); i++)
+            
+            for (int curDay = 0; curDay <= GC.GetDaysInYear(yearParse); curDay++)
             {
 
 
@@ -204,9 +228,9 @@ namespace ExperimentalProc.DataBase
             try
             {
                 connection.Open();
-                SqlCommand cmd = new SqlCommand();
+                //SqlCommand cmd = new SqlCommand();//moved to : find valid days logic
                 cmd.Connection = connection;
-                cmd.CommandText = null;//update with SQL insert statment
+                //cmd.CommandText = null;//moved to : find valid days logic
                 cmd.ExecuteNonQuery();
             }
             catch (SqlException excp)
