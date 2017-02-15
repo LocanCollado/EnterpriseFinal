@@ -9,6 +9,8 @@ DataBase: My SQL
 
 TODO:
 -Get an idea:Dan
+-Create Databsae Structure : Dan
+-Create SQL statments that I can use to interface with the database : Dan
 
 
 TASK CLAIM:

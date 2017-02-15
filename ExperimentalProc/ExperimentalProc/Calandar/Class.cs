@@ -6,8 +6,15 @@ using System.Threading.Tasks;
 
 namespace ExperimentalProc.Calandar
 {
-    //used by rooms to hold information
+    //used by Room.cs to hold information
+    //used by Student.cs
     class Class : Data
     {
+        public string classID;
+
+        public Class()
+        {
+
+        }
     }
 }
