@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Globalization;
 
 namespace ExperimentalProc.Calandar
 {
-    class Month : CalanderFormater
+    class Month
     {
         private int monthID;
-        private Day[] Days;
+        public List<Day> Days;
 
         /*
          Used by CalanderFormater to identify days of month.
@@ -21,10 +22,11 @@ namespace ExperimentalProc.Calandar
             Functions:
             (int) getDaysInMonth(): returns number of days in this month
              */
-        public Month(int year, int monthID) : base(year)
+        public Month(int year, int monthID)
         {
+            GregorianCalendar GC = new GregorianCalendar();
             this.monthID = monthID;
-            Days = new Day[GC.GetDaysInMonth(base.year,this.monthID)];
+            Days = new List<Day>();
             
         }
 
@@ -33,7 +35,7 @@ namespace ExperimentalProc.Calandar
          */
         public int getDaysInMonth()
         {
-            return Days.Length;
+            return Days.Count;
         }
 
         

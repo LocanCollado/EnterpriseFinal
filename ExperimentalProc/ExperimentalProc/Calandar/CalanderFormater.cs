@@ -31,17 +31,25 @@ namespace ExperimentalProc.Calandar
              */
         public CalanderFormater(int year)
         {
+            this.year = year;
+
+            months = new List<Month>();
+            days = new List<Day>();
+            int day = 1;
             int month = 1;//start with the first month
             months.Add(new Month(this.year, month));//add the first month to list
             for (int i = 1; i <= GC.GetDaysInYear(this.year); i++)
             {
-                if(i > GC.GetDaysInMonth(this.year, month))//if day does not fit in current month add a new one
+                
+                if(day > GC.GetDaysInMonth(this.year, month))//if day does not fit in current month add a new one
                 {
+                    day = 1;
                     month++;
                     months.Add(new Month(this.year, month));//add new month to list of months
                 }
                 days.Add(new Day(this.year, i));//add current day to list
-                months[month - 1].days.Add(days[i - 1]);//add reffrence to current day to its respective month
+                months[month - 1].Days.Add(days[i - 1]);//add reffrence to current day to its respective month
+                day++;
             }
         }
 

@@ -11,10 +11,8 @@ namespace ExperimentalProc
     {
         static void Main(string[] args)//Testing stuff
         {
-            
-            DataBase.Server test = new DataBase.Server();
 
-            test.InsertIntoDataBase();
+            Calandar.CalanderFormater CF = new Calandar.CalanderFormater(2017);
 
             System.Console.WriteLine("Hello, world! again edit");
         }
