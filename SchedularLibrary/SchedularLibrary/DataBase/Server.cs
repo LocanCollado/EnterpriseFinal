@@ -28,6 +28,7 @@ namespace ExperimentalProc.DataBase
             }
 
             //DataBaseConectionString = "server=stusql;uid=lc10;database=EnterpriseFinalBBB;";//deadcode: replaced with config
+            //config path: WebApp\Bin\DataBaseConfig.txt
             
             try
             {
