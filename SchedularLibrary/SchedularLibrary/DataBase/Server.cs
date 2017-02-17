@@ -6,9 +6,7 @@ using System.Threading.Tasks;
 using System.IO;
 using System.Data.SqlClient;
 using System.Globalization;
-
-
-
+using System.Reflection;
 
 namespace ExperimentalProc.DataBase
 {
@@ -19,7 +17,7 @@ namespace ExperimentalProc.DataBase
         public Server()
         {
 
-            StreamReader config = new StreamReader("..\\..\\DataBase\\DataBaseConfig.txt");
+            StreamReader config = new StreamReader(Path.GetDirectoryName(Uri.UnescapeDataString(new UriBuilder(Assembly.GetAssembly(typeof(Server)).CodeBase).Path)) + "/DataBaseConfig.txt");
 
             while (!config.EndOfStream ) {//load config functions
                 string[] line = config.ReadLine().Split(':');
