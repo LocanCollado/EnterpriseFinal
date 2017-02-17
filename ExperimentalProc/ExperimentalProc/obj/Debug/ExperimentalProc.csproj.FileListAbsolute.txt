@@ -7,3 +7,6 @@ c:\users\da8\documents\visual studio 2015\Projects\ExperimentalProc\Experimental
 E:\Extrnl-Code file\EnterpriseApps\EnterpriseFinal-Developement\ExperimentalProc\ExperimentalProc\bin\Debug\ExperimentalProc.exe.config
 E:\Extrnl-Code file\EnterpriseApps\EnterpriseFinal-Developement\ExperimentalProc\ExperimentalProc\obj\Debug\ExperimentalProc.exe
 E:\Extrnl-Code file\EnterpriseApps\EnterpriseFinal-Developement\ExperimentalProc\ExperimentalProc\obj\Debug\ExperimentalProc.pdb
+C:\Users\da8\Documents\GitHub\EnterpriseFinal\ExperimentalProc\ExperimentalProc\bin\Debug\ExperimentalProc.exe.config
+C:\Users\da8\Documents\GitHub\EnterpriseFinal\ExperimentalProc\ExperimentalProc\obj\Debug\ExperimentalProc.exe
+C:\Users\da8\Documents\GitHub\EnterpriseFinal\ExperimentalProc\ExperimentalProc\obj\Debug\ExperimentalProc.pdb
