@@ -1,1 +1,0 @@
-﻿DataBase Conection String:Data Source=stusql;Initial Catalog=EnterpriseFinalBBB;Integrated Security=true;
