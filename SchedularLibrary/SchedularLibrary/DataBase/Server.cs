@@ -8,6 +8,9 @@ using System.Data.SqlClient;
 using System.Globalization;
 using System.Reflection;
 
+//Contians problems that must be fixed before push to master [MASTER]
+//Contains problems that *SHOULD* be fixed before end of alpha phase [ALPHA]
+
 namespace ExperimentalProc.DataBase
 {
     public class Server
@@ -24,7 +27,7 @@ namespace ExperimentalProc.DataBase
 
                 if(line[0] == "DataBase Conection String") { DataBaseConectionString = line[1]; }//database conection string
 
-                //TODO add ADMIN config
+                //TODO add ADMIN config [ALPHA]
             }
 
             //DataBaseConectionString = "server=stusql;uid=lc10;database=EnterpriseFinalBBB;";//deadcode: replaced with config
@@ -45,6 +48,7 @@ namespace ExperimentalProc.DataBase
             
         }
 
+        //TODO: Change this to allow for defined parameters for insert, so it can serve an actual use
         //generic insert into database statment
         public bool InsertIntoDataBase()
         {
@@ -68,7 +72,10 @@ namespace ExperimentalProc.DataBase
             return true;
         }
 
-
+        //this method must be tested and verified to work [MASTER]
+        //Parameters (month,week,day) should be modified to allow for multiple target values [ALPHA]
+        //need to add defined parmeters for start and end times, must be finished before push to master [MASTER]
+        //UPDATE:Dan: I added the paremeters, now we need logic to handle it so we don't insert bad data to dataBase : timeLogic
         /*
          Attempts a brute force insert of all data considered valid by target parameters.
          Does not check against data inside database.
@@ -84,8 +91,10 @@ namespace ExperimentalProc.DataBase
              day(string): target day of target month(s) to upload target data. if left as (null) or (0) all days will be targeted
              room(string): roomID of target data to upload into database
              course(string): courseID of target data to upload into database
+             startTime(string): time of day following 12 Clock formated to fit "XX:XX" as a 5 character string, defines begining target time of day for upload into dataBase
+             endTime(string): time of day following 12 Clock formated to fit "XX:XX" as a 5 character string, defines ending target time of day for upload into dataBase
              */
-        public bool InsertSchedualItem(string year, string month, string week, string day, string room, string course)
+        public bool InsertSchedualItem(string year, string month, string week, string day, string room, string course , string startTime, string endTime)
         {
 
             //Convert Year Logic
@@ -161,7 +170,7 @@ namespace ExperimentalProc.DataBase
                 //Pre insert Room Logic Here:
 
             }
-            else if (room == null)
+            else if (room == null)//Dan: roomID shouldn't be optional either, need to fix before push to master [MASTER]
             {
                 roomParse = 0;
             }
@@ -172,14 +181,14 @@ namespace ExperimentalProc.DataBase
             }
 
 
-            //Convert Week Logic
+            //Convert Course Logic
             int courseParse;
             if (int.TryParse(course, out courseParse))
             {
                 //Pre insert Course Logic Here:
 
             }
-            else if (course == null)
+            else if (course == null)//Dan: hold up... the course ID shouldn't be optional. this needs fixed before we can update master [MASTER]
             {
                 courseParse = 0;
             }
@@ -189,36 +198,52 @@ namespace ExperimentalProc.DataBase
                 return false;
             }
 
-            //Dan : Calandar logic
+            //TODO: make sure the (startTime) and (endTime) parameters are correctly formated to be inserted into database [MASTER] : timeLogic
 
-            //TODO: paused work on this funtion here untill Data/Calandar/CalandarFormater.cs can be used to handle finding valid days logic
-            //Should be ready to impliment, still needs to be tested though
+            //Dan : Calandar logic
+            Calandar.CalanderFormater CF = new Calandar.CalanderFormater(yearParse);
+
+            SqlCommand cmd = new SqlCommand();//holds information for interacting with database
+            //GregorianCalendar GC = new GregorianCalendar();//deadcode: replaced with CalanderFormater
 
             //Dan : find valid days logic
-            SqlCommand cmd = new SqlCommand();
-            GregorianCalendar GC = new GregorianCalendar();
-            int nonSpecMonth = 1;
-            int nonSpecWeek = 1;
-            int nonSpecDay = 1;
-            
-            for (int curDay = 0; curDay <= GC.GetDaysInYear(yearParse); curDay++)
+            for (int curDay = 1; curDay <= CF.GetDaysAmount(); curDay++)//begin for days in year
             {
+                bool isValid = true;
 
-
-                if (monthParse == 0)//month not specified
+                if (monthParse != 0)//if month specified
                 {
-                    if (weekParse == 0)//week not specified
+                    if(CF.getMonthByDay(curDay).getMonthID() != monthParse)//looks to see if current day is in specified month
                     {
-                        if (dayParse == 0)//day not specified
-                        {
+                        isValid = false;//makes invalid if it is
+                    }
 
-                        }//end day not specified
+                }//end if month specified
 
-                    }//end week not specified
+                if (weekParse != 0)//if week specified
+                {
+                    if(CF.getDayOfWeek(curDay) != weekParse)//looks to see if current day is specified day of week
+                    {
+                        isValid = false;
+                    }
+                }//end if week specified
 
-                }//end month not specified
+                if (dayParse != 0)//if day specified
+                {
+                    if(CF.getMonthByDay(curDay).getDayByMonth(dayParse).getDayID() != curDay)//looks to see if current day is specified days into month
+                    {
+                        isValid = false;
+                    }
+                }//end if day specified
 
-            }//for days in year
+                if (isValid)
+                {
+                    //add a line of text to the SQL command object that inserts the target data into the database : find valid days logic
+                    cmd.CommandText += "INSERT INTO Schedule(Class_ID,Room_ID,year,month,week,day,Start_Time,End_Time)\n"
+                                    + "VALUES(" + courseParse + "," + roomParse + "," + yearParse + "," + CF.getMonthByDay(curDay).getMonthID() + "," + CF.getDayOfWeek(curDay) + "," + CF.getDayByYear(curDay).getDayID() +",'"+ startTime + "','" + endTime + "');\n";
+                }
+
+            }//end for days in year
 
             
 
@@ -229,6 +254,7 @@ namespace ExperimentalProc.DataBase
                 cmd.Connection = connection;
                 //cmd.CommandText = null;//moved to : find valid days logic
                 cmd.ExecuteNonQuery();
+                connection.Close();
             }
             catch (SqlException excp)
             {
