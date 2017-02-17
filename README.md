@@ -1,17 +1,9 @@
-# EnterpriseFinal
-Final project for an Enterprise Applications class.
+# Depriciated Nightmare Wasteland!!!
 
+the code found here is incompatable with everything. any changes made here are completly pointless, so don't upload anything here
+this still exists mainly as a monument to what once was... my sanity
 
-Technololietts:
-CodeBase: C#
-DataBase: My SQL
-
-
-TODO:
--Get an idea:Dan
--Create Databsae Structure : Dan
--Create SQL statments that I can use to interface with the database : Dan
-
-
-TASK CLAIM:
-Dan:organize files and attempt to keep some sembalance of standards to allow for smooth merging
+SOLIENT GREEN IS PEOPLE!
+THE GOVERNMENT IS A LIE!
+THE UNIVERSE IS A SIMULATION!
+BUY GOLD BYYYYYYYE!
