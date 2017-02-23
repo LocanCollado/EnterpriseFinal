@@ -13,6 +13,7 @@ using System.Diagnostics;
 //Contains problems that *SHOULD* be fixed before end of alpha phase [ALPHA]
 //Contains problems that would be nice to resolve [TODO]
 
+
 namespace ExperimentalProc.DataBase
 {
     public class Server
@@ -52,18 +53,104 @@ namespace ExperimentalProc.DataBase
 
         //TODO: Change this to allow for defined parameters for insert, so it can serve an actual use
         //generic insert into database statment
-        public bool InsertIntoDataBase()
+        public bool InsertRoomIntoDataBase(String Room_ID, String Room_Name)
         {
-            
+
+            SqlCommand cmd = new SqlCommand();
+            //Convert Room Logic
+            int Room_IDParse;
+            if (int.TryParse(Room_ID, out Room_IDParse))
+            {
+                //Pre insert Room Logic Here:
+
+            }
+            else
+            {
+                Debug.WriteLine("Failed to Parse <STRING_YEAR: " + Room_ID + "> too INT");
+                return false;
+            }
+
+
+            //Convert Month Logic
+            String Room_NameParse;
+            if (Room_Name.Length <= 20)
+            {
+                //Pre insert Month Logic Here:
+                Room_NameParse = Room_Name;
+            }
+            else
+            {
+                Debug.WriteLine("Failed to Parse <STRING_MONTH: " + Room_Name + "> too INT");
+                return false;
+            }
             try
             {
                 connection.Open();
-                SqlCommand cmd = new SqlCommand();
                 cmd.Connection = connection;
-                cmd.CommandText = "INSERT INTO Rooms (Room_ID,Room_Name) VALUES("+ (int) 404 +","+ "'Art Room'" +"); ";//alter this to be an insert statment
+                cmd.CommandText = "INSERT INTO Rooms (Room_ID,Room_Name) VALUES("+ (int) 400+","+ "'Gyme Room'" +"); ";//alter this to be an insert statment
                 cmd.ExecuteNonQuery();
             }
             catch(SqlException excp)
+            {
+                Debug.WriteLine("Failed to run InsertIntoDataBase: " + excp);
+                connection.Close();
+                return false;
+            }
+
+            connection.Close();
+            return true;
+        }
+        public bool InsertCourseIntoDataBase(String Class_ID, String Course, String Course_ID)
+        {
+
+            SqlCommand cmd = new SqlCommand();
+            //Convert Room Logic
+            int Class_IDParse;
+            if (int.TryParse(Class_ID, out Class_IDParse))
+            {
+                //Pre insert Room Logic Here:
+
+            }
+            else
+            {
+                Debug.WriteLine("Failed to Parse <STRING_Class_ID: " + Class_ID + "> too INT");
+                return false;
+            }
+
+
+            //Convert Month Logic
+            String CourseParse;
+            if (Course.Length <= 20)
+            {
+                //Pre insert Month Logic Here:
+               CourseParse = Course;
+            }
+            else
+            {
+                Debug.WriteLine("Failed to Parse <STRING_Course: " + Course + "> too INT");
+                return false;
+            }
+            //Convert Month Logic
+            String Course_IDParse;
+            if (Course_ID.Length <= 20)
+            {
+                //Pre insert Month Logic Here:
+                Course_IDParse = Course;
+            }
+            else
+            {
+                Debug.WriteLine("Failed to Parse <STRING_MONTH: " + Course_ID + "> too INT");
+                return false;
+            }
+
+            try
+            {
+                connection.Open();
+                cmd.Connection = connection;
+                cmd.CommandText = "INSERT INTO Classes(Class_ID,Class, Course) VALUES(" + (int)300 + "," + "'Gym'" + ","+"'15228'"+"); ";//alter this to be an insert statment
+                cmd.ExecuteNonQuery();
+            }
+            catch (SqlException excp)
             {
                 Debug.WriteLine("Failed to run InsertIntoDataBase: " + excp);
                 connection.Close();
@@ -204,6 +291,7 @@ namespace ExperimentalProc.DataBase
             //Dan : Calandar logic
             Calandar.CalanderFormater CF = new Calandar.CalanderFormater(yearParse);
 
+
             SqlCommand cmd = new SqlCommand();//holds information for interacting with database
             //GregorianCalendar GC = new GregorianCalendar();//deadcode: replaced with CalanderFormater
 
@@ -239,6 +327,25 @@ namespace ExperimentalProc.DataBase
 
                 if (isValid)
                 {
+                    string[] badrows;
+                    string[] colDats = {null,null, null, null, null, null, CF.getDayByYear(curDay).getDayID().ToString(), null, null };
+                    if (!IsConflict("SELECT * FROM [EnterpriseFinalBBB].[dbo].[Schedule] WHERE year IN ("+ yearParse +");", colDats, out badrows))//checks for conflicting days of year
+                    {
+
+                        colDats = new string[] { null,null, roomParse.ToString(), null, null, null, null, null, null };//checks for conflicting rooms in days of year
+
+                        string queryValues = badrows[0];
+                        for (int i = 1; i < badrows.Length; i++)
+                        {
+                            queryValues += "," + badrows[i];
+                        }
+
+                        if (!IsConflict("SELECT * FROM [EnterpriseFinalBBB].[dbo].[Schedule] WHERE List_ID IN (" + queryValues + ");", colDats, out badrows))
+                        {
+                            //TODO: find conflicting times [ALPHA]
+                        }
+                    }
+
                     //add a line of text to the SQL command object that inserts the target data into the database : find valid days logic
                     cmd.CommandText += "INSERT INTO Schedule(Class_ID,Room_ID,year,month,week,day,Start_Time,End_Time)\n"
                                     + "VALUES(" + courseParse + "," + roomParse + "," + yearParse + "," + CF.getMonthByDay(curDay).getMonthID() + "," + CF.getDayOfWeek(curDay) + "," + CF.getDayByYear(curDay).getDayID() +",'"+ startTime + "','" + endTime + "');\n";
@@ -300,7 +407,7 @@ namespace ExperimentalProc.DataBase
                 {
                     for(int i = 0; i < collumDats.Length; i++)//runs for each given collumn
                     {
-                        if ((collumDats[i].Equals(reader.GetString(i))) && (collumDats[i] != null))
+                        if ((collumDats[i].Equals(reader.GetString(i))) && (collumDats[i] != null || collumDats[i] != "0"))
                         {
                             tempBadRows.Add(reader.GetString(0));
                             value = false;
