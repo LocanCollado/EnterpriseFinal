@@ -7,9 +7,11 @@ using System.IO;
 using System.Data.SqlClient;
 using System.Globalization;
 using System.Reflection;
+using System.Diagnostics;
 
 //Contians problems that must be fixed before push to master [MASTER]
 //Contains problems that *SHOULD* be fixed before end of alpha phase [ALPHA]
+//Contains problems that would be nice to resolve [TODO]
 
 namespace ExperimentalProc.DataBase
 {
@@ -31,19 +33,19 @@ namespace ExperimentalProc.DataBase
             }
 
             //DataBaseConectionString = "server=stusql;uid=lc10;database=EnterpriseFinalBBB;";//deadcode: replaced with config
-            //config path: WebApp\Bin\DataBaseConfig.txt
+            //config path: WebApp/Bin/DataBaseConfig.txt
             
             try
             {
                 connection = new SqlConnection();
                 connection.ConnectionString = DataBaseConectionString;
-                System.Console.WriteLine("Connection Made");
-                System.Console.WriteLine(DataBaseConectionString);
+                Debug.WriteLine("Connection Made");
+                Debug.WriteLine(DataBaseConectionString);
             }
             catch(SqlException excp)
             {
-                System.Console.WriteLine(DataBaseConectionString);
-                System.Console.WriteLine("Connection Failed: " + excp);
+                Debug.WriteLine(DataBaseConectionString);
+                Debug.WriteLine("Connection Failed: " + excp);
             }
             
         }
@@ -63,7 +65,7 @@ namespace ExperimentalProc.DataBase
             }
             catch(SqlException excp)
             {
-                System.Console.WriteLine("Failed to run InsertIntoDataBase: " + excp);
+                Debug.WriteLine("Failed to run InsertIntoDataBase: " + excp);
                 connection.Close();
                 return false;
             }
@@ -82,7 +84,7 @@ namespace ExperimentalProc.DataBase
          If a target parameters are not valid within given context, function will imediantly terminate and no data will be inserted into database [returns false].
              
              Parmeters(implicit):
-             Target Database: Defined by [DataBase Connetion String] in [DataBase/DataBaseConfig.txt]
+             Target Database: Defined by [DataBase Connetion String] in [WebApp/Bin/DataBaseConfig.txt]
 
              Parmeters(defined):
              year(string): target year for upload into database. used by (Calander Logic) and [Calandar/CalanderFormater.cs]
@@ -105,7 +107,7 @@ namespace ExperimentalProc.DataBase
 
             }else
             {
-                System.Console.WriteLine("Failed to Parse <STRING_YEAR: "+ year +"> too INT");
+                Debug.WriteLine("Failed to Parse <STRING_YEAR: "+ year +"> too INT");
                 return false;
             }
 
@@ -121,7 +123,7 @@ namespace ExperimentalProc.DataBase
                 monthParse = 0;
             }else
             {
-                System.Console.WriteLine("Failed to Parse <STRING_MONTH: " + month + "> too INT");
+                Debug.WriteLine("Failed to Parse <STRING_MONTH: " + month + "> too INT");
                 return false;
             }
 
@@ -139,10 +141,9 @@ namespace ExperimentalProc.DataBase
             }
             else
             {
-                System.Console.WriteLine("Failed to Parse <STRING_WEEK: " + week + "> too INT");
+                Debug.WriteLine("Failed to Parse <STRING_WEEK: " + week + "> too INT");
                 return false;
             }
-
 
             
             //Convert Day Logic
@@ -158,7 +159,7 @@ namespace ExperimentalProc.DataBase
             }
             else
             {
-                System.Console.WriteLine("Failed to Parse <STRING_DAY: " + day + "> too INT");
+                Debug.WriteLine("Failed to Parse <STRING_DAY: " + day + "> too INT");
                 return false;
             }
 
@@ -176,7 +177,7 @@ namespace ExperimentalProc.DataBase
             }
             else
             {
-                System.Console.WriteLine("Failed to Parse <STRING_ROOM: " + room + "> too INT");
+                Debug.WriteLine("Failed to Parse <STRING_ROOM: " + room + "> too INT");
                 return false;
             }
 
@@ -194,7 +195,7 @@ namespace ExperimentalProc.DataBase
             }
             else
             {
-                System.Console.WriteLine("Failed to Parse <STRING_COURSE: " + course + "> too INT");
+                Debug.WriteLine("Failed to Parse <STRING_COURSE: " + course + "> too INT");
                 return false;
             }
 
@@ -249,6 +250,7 @@ namespace ExperimentalProc.DataBase
 
             try
             {
+                Debug.WriteLine(cmd.CommandText);
                 connection.Open();
                 //SqlCommand cmd = new SqlCommand();//moved to : find valid days logic
                 cmd.Connection = connection;
@@ -258,12 +260,65 @@ namespace ExperimentalProc.DataBase
             }
             catch (SqlException excp)
             {
-                System.Console.WriteLine("Failed to run InsertIntoDataBase: " + excp);
+                Debug.WriteLine("Failed to run InsertIntoDataBase: " + excp);
                 connection.Close();
                 return false;
             }
 
             return true;
+        }//end InsertSchedualItem
+
+        /*
+         * (bool) IsConflict(string selectQuery, string[] collumDats, out string[] badRows)
+         * takes a query string that selects a table and compares it too a string array containg a set of row data for that table
+         * 
+         *      Parameters(implicit):
+         *      Target Database: Defined by [DataBase Connetion String] in [WebApp/Bin/DataBaseConfig.txt]
+         * 
+         *      Parameters(defined):
+         *      selectQuery(string): a SQL select statment that must reuturn the primary key as the first element and all data must be returned
+         *              as the same element index as the value it is to be compared too in [collumDats]
+         *      collumDats(string[]): an array of string values that represent a row of data to compare against, any element index with its value as (null)
+         *              will not be checked for conflicts
+         *      
+         *      Parameters(return):
+         *      this method(bool): returns true if no conflicts detected, false if there are
+         *      badRows(string[]): creates a string array whose length is the number of rows with conflicting data and each element is the primary key of each row that had conflicting data
+         */
+        private bool IsConflict(string selectQuery, string[] collumDats, out string[] badRows)
+        {
+
+            SqlCommand cmd = new SqlCommand(selectQuery, connection);
+            List<string> tempBadRows = new List<string>();
+            bool value = true;
+
+            try
+            {
+                connection.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (!reader.Read())//runs for each row
+                {
+                    for(int i = 0; i < collumDats.Length; i++)//runs for each given collumn
+                    {
+                        if ((collumDats[i].Equals(reader.GetString(i))) && (collumDats[i] != null))
+                        {
+                            tempBadRows.Add(reader.GetString(0));
+                            value = false;
+                            break;
+                        }
+                    }//end for collumn
+                }//end while row
+                connection.Close();
+            }
+            catch (SqlException excp)//currently dosen't warn do anything alert user if function didn't execute, or only partially execute probably want to fix that [TODO]
+            {
+                Debug.WriteLine("Failed on dataReader: " + excp);
+                connection.Close();
+                value = false;
+            }
+
+            badRows = tempBadRows.ToArray();
+            return value;
         }
 
 
