@@ -77,6 +77,7 @@ namespace ExperimentalProc.DataBase
         //this method must be tested and verified to work [MASTER]
         //Parameters (month,week,day) should be modified to allow for multiple target values [ALPHA]
         //need to add defined parmeters for start and end times, must be finished before push to master [MASTER]
+        //Need logic to handle Dynamic insert [ALPHA]
         //UPDATE:Dan: I added the paremeters, now we need logic to handle it so we don't insert bad data to dataBase : timeLogic
         /*
          Attempts a brute force insert of all data considered valid by target parameters.
@@ -239,6 +240,25 @@ namespace ExperimentalProc.DataBase
 
                 if (isValid)
                 {
+                    string[] badrows;
+                    string[] colDats = {null,null, null, null, null, null, CF.getDayByYear(curDay).getDayID().ToString(), null, null };
+                    if (!IsConflict("SELECT * FROM [EnterpriseFinalBBB].[dbo].[Schedule] WHERE year IN ("+ yearParse +");", colDats, out badrows))//checks for conflicting days of year
+                    {
+
+                        colDats = new string[] { null,null, roomParse.ToString(), null, null, null, null, null, null };//checks for conflicting rooms in days of year
+
+                        string queryValues = badrows[0];
+                        for (int i = 1; i < badrows.Length; i++)
+                        {
+                            queryValues += "," + badrows[i];
+                        }
+
+                        if (!IsConflict("SELECT * FROM [EnterpriseFinalBBB].[dbo].[Schedule] WHERE List_ID IN (" + queryValues + ");", colDats, out badrows))
+                        {
+                            //TODO: find conflicting times [ALPHA]
+                        }
+                    }
+
                     //add a line of text to the SQL command object that inserts the target data into the database : find valid days logic
                     cmd.CommandText += "INSERT INTO Schedule(Class_ID,Room_ID,year,month,week,day,Start_Time,End_Time)\n"
                                     + "VALUES(" + courseParse + "," + roomParse + "," + yearParse + "," + CF.getMonthByDay(curDay).getMonthID() + "," + CF.getDayOfWeek(curDay) + "," + CF.getDayByYear(curDay).getDayID() +",'"+ startTime + "','" + endTime + "');\n";
@@ -300,7 +320,7 @@ namespace ExperimentalProc.DataBase
                 {
                     for(int i = 0; i < collumDats.Length; i++)//runs for each given collumn
                     {
-                        if ((collumDats[i].Equals(reader.GetString(i))) && (collumDats[i] != null))
+                        if ((collumDats[i].Equals(reader.GetString(i))) && (collumDats[i] != null || collumDats[i] != "0"))
                         {
                             tempBadRows.Add(reader.GetString(0));
                             value = false;
