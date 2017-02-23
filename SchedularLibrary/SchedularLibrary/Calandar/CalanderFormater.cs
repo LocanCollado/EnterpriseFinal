@@ -11,7 +11,7 @@ namespace ExperimentalProc.Calandar
     /*
      Used translate calander data for interpetation to simplify comunication to and from the database
          */
-    class CalanderFormater
+    public class CalanderFormater
     {
         protected GregorianCalendar GC = new GregorianCalendar();
         protected int year;
@@ -113,7 +113,7 @@ namespace ExperimentalProc.Calandar
          */
         public int getDayOfWeek(int dayID)
         {
-            return (int)GC.GetDayOfWeek(new DateTime(this.year, this.getMonthByDay(dayID).getMonthID(), dayID)) + 1;         
+            return ( (int) GC.GetDayOfWeek(new DateTime(this.year, getMonthByDay(dayID).getMonthID(), getMonthByDay(dayID).getDaysIntoMonth(getDayByYear(dayID)))) ) + 1;         
         }
     }
 }

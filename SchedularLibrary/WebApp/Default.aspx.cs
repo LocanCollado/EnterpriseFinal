@@ -15,5 +15,11 @@ namespace WebApp
         {
             ExperimentalProc.DataBase.Server dat = new ExperimentalProc.DataBase.Server();
         }
+
+        public void  openWin(object sender, EventArgs e)
+        {
+            
+            Response.Redirect("http://localhost:53291/FInalProject/signuppage.html");
+        }
     }
 }

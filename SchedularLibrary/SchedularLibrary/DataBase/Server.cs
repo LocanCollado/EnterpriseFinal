@@ -13,6 +13,7 @@ using System.Diagnostics;
 //Contains problems that *SHOULD* be fixed before end of alpha phase [ALPHA]
 //Contains problems that would be nice to resolve [TODO]
 
+
 namespace ExperimentalProc.DataBase
 {
     public class Server
@@ -290,6 +291,7 @@ namespace ExperimentalProc.DataBase
             //Dan : Calandar logic
             Calandar.CalanderFormater CF = new Calandar.CalanderFormater(yearParse);
 
+
             SqlCommand cmd = new SqlCommand();//holds information for interacting with database
             //GregorianCalendar GC = new GregorianCalendar();//deadcode: replaced with CalanderFormater
 
@@ -325,6 +327,25 @@ namespace ExperimentalProc.DataBase
 
                 if (isValid)
                 {
+                    string[] badrows;
+                    string[] colDats = {null,null, null, null, null, null, CF.getDayByYear(curDay).getDayID().ToString(), null, null };
+                    if (!IsConflict("SELECT * FROM [EnterpriseFinalBBB].[dbo].[Schedule] WHERE year IN ("+ yearParse +");", colDats, out badrows))//checks for conflicting days of year
+                    {
+
+                        colDats = new string[] { null,null, roomParse.ToString(), null, null, null, null, null, null };//checks for conflicting rooms in days of year
+
+                        string queryValues = badrows[0];
+                        for (int i = 1; i < badrows.Length; i++)
+                        {
+                            queryValues += "," + badrows[i];
+                        }
+
+                        if (!IsConflict("SELECT * FROM [EnterpriseFinalBBB].[dbo].[Schedule] WHERE List_ID IN (" + queryValues + ");", colDats, out badrows))
+                        {
+                            //TODO: find conflicting times [ALPHA]
+                        }
+                    }
+
                     //add a line of text to the SQL command object that inserts the target data into the database : find valid days logic
                     cmd.CommandText += "INSERT INTO Schedule(Class_ID,Room_ID,year,month,week,day,Start_Time,End_Time)\n"
                                     + "VALUES(" + courseParse + "," + roomParse + "," + yearParse + "," + CF.getMonthByDay(curDay).getMonthID() + "," + CF.getDayOfWeek(curDay) + "," + CF.getDayByYear(curDay).getDayID() +",'"+ startTime + "','" + endTime + "');\n";
@@ -386,7 +407,7 @@ namespace ExperimentalProc.DataBase
                 {
                     for(int i = 0; i < collumDats.Length; i++)//runs for each given collumn
                     {
-                        if ((collumDats[i].Equals(reader.GetString(i))) && (collumDats[i] != null))
+                        if ((collumDats[i].Equals(reader.GetString(i))) && (collumDats[i] != null || collumDats[i] != "0"))
                         {
                             tempBadRows.Add(reader.GetString(0));
                             value = false;
