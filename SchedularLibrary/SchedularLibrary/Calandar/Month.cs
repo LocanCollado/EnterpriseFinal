@@ -7,7 +7,7 @@ using System.Globalization;
 
 namespace ExperimentalProc.Calandar
 {
-    class Month
+    public class Month
     {
         private int monthID;
         public List<Day> Days;
@@ -55,6 +55,20 @@ namespace ExperimentalProc.Calandar
         public Day getDayByMonth(int daysIntoMonth)
         {
             return Days[daysIntoMonth - 1];
+        }
+
+        public int getDaysIntoMonth(Day day)
+        {
+            for (int i = 0; i < Days.Count; i++)
+            {
+                if (Days[i].getDayID() == day.getDayID())
+                {
+                    return i + 1;
+                }
+            }
+
+            return 0;//returns 0 if it didn't find anything
+
         }
 
         
