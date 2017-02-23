@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ExperimentalProc.Calandar
 {
-    class Day
+    public class Day
     {
         private int dayID;
 
