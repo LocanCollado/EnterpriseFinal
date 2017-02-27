@@ -2,3 +2,7 @@ E:\Extrnl-Code file\EnterpriseApps\SchedularLibrary\SchedularLibrary\bin\Debug\E
 E:\Extrnl-Code file\EnterpriseApps\SchedularLibrary\SchedularLibrary\bin\Debug\ExperimentalProc.pdb
 E:\Extrnl-Code file\EnterpriseApps\SchedularLibrary\SchedularLibrary\obj\Debug\ExperimentalProc.dll
 E:\Extrnl-Code file\EnterpriseApps\SchedularLibrary\SchedularLibrary\obj\Debug\ExperimentalProc.pdb
+F:\Git\EnterpriseFinal\SchedularLibrary\SchedularLibrary\obj\Debug\ExperimentalProc.dll
+F:\Git\EnterpriseFinal\SchedularLibrary\SchedularLibrary\obj\Debug\ExperimentalProc.pdb
+F:\Git\EnterpriseFinal\SchedularLibrary\SchedularLibrary\bin\Debug\ExperimentalProc.dll
+F:\Git\EnterpriseFinal\SchedularLibrary\SchedularLibrary\bin\Debug\ExperimentalProc.pdb

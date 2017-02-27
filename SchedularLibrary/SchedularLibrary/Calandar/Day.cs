@@ -6,9 +6,12 @@ using System.Threading.Tasks;
 
 namespace ExperimentalProc.Calandar
 {
-    class Day
+    public class Day
     {
         private int dayID;
+
+        //TODO: get what day of the week this day is EX:"monday"
+        //Update: I made CalanderFormater do it instead because it already had a GregorianCalander object
 
         /*
          used by Calander formater to identify days of year.
@@ -19,6 +22,14 @@ namespace ExperimentalProc.Calandar
         public Day(int year, int dayID)
         {
             this.dayID = dayID;//if you need this to be explained... god help you
+        }
+
+        /*
+         * (int) getDayID(): returns the identifier of this day, synomonus with the number of days into the year this day occurs
+         */
+        public int getDayID()
+        {
+            return dayID;
         }
     }
 }
