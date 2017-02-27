@@ -19,7 +19,7 @@ namespace ExperimentalProc
         }
     }
 
-    class Client : Data
+    public class Client
     {
         //anything to be inherited by all clients go in this class
 
@@ -29,10 +29,15 @@ namespace ExperimentalProc
         //firstname
         private string Password = null;
 
-        protected Client(string UserName,string Password)//client class constructor
+        public Client(string UserName,string Password)//client class constructor
         {
             this.UserName = UserName;
             this.Password = Password;
+        }
+
+        public Client(DataBase.Server datBase)
+        {
+            //TODO:retrive client info from database
         }
 
         public void setUserName(string UserName)
@@ -57,6 +62,8 @@ namespace ExperimentalProc
 
         
     }
+
+    
 
     
     
