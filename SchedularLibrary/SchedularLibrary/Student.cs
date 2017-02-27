@@ -6,13 +6,10 @@ using System.Threading.Tasks;
 
 namespace ExperimentalProc
 {
-    class Student : Data
+    class Student : Client
     {
-        
-
-        public Student()
+        public Student(string UserName, string Password) : base(UserName, Password)
         {
-
         }
     }
 }
