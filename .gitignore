@@ -1,0 +1,3 @@
+*.config
+SchedularLibrary/.vs/config/applicationhost.config
+*.sql

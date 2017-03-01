@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 namespace ExperimentalProc
 {
     class Student : Client
+
     {
         public Student(string UserName, string Password) : base(UserName, Password)
         {
