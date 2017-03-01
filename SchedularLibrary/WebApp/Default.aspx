@@ -1,42 +1,50 @@
-﻿<%@ Page Title="Home Page" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="WebApp._Default" %>
+﻿
+
+
+
+
+
+
+
+<%@ Page Title="Home Page" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="WebApp._Default" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
 
-    <div class="jumbotron">
-        <h1>ASP.NET</h1>
-        <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS, and JavaScript.</p>
-        <p><a href="http://www.asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
-    </div>
+    
+    
+    <div style="color:goldenrod; background-color:#03253e ; height:1000px; width:1000px">
+    <h1 style="font-size: 45px; border:groove 5px ; border-color:goldenrod ; background-color:goldenrod ; color:#03253e ; width:570px;height:45px;">Pittsburgh Technical</h1>
+        <h1 style="font-size: 45px; border:groove 5px ; border-color:goldenrod ; background-color:goldenrod ; color:#03253e ; width:570px;height:45px;">&nbsp;College</h1>
+    <h3 style="width:570px; height: 45px">
+        
 
-    <div class="row">
-        <div class="col-md-4">
-            <h2>Getting started</h2>
-            <p>
-                ASP.NET Web Forms lets you build dynamic websites using a familiar drag-and-drop, event-driven model.
-            A design surface and hundreds of controls and components let you rapidly build sophisticated, powerful UI-driven sites with data access.
-            </p>
-            <p>
-                <a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301948">Learn more &raquo;</a>
-            </p>
-        </div>
-        <div class="col-md-4">
-            <h2>Get more libraries</h2>
-            <p>
-                NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.
-            </p>
-            <p>
-                <a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301949">Learn more &raquo;</a>
-            </p>
-        </div>
-        <div class="col-md-4">
-            <h2>Web Hosting</h2>
-            <p>
-                You can easily find a web hosting company that offers the right mix of features and price for your applications.
-            </p>
-            <p>
-                <a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301950">Learn more &raquo;</a>
-            </p>
-        </div>
-    </div>
+            <span></span>
+            
+            Username:
+            <asp:TextBox runat="server"></asp:TextBox>
+            <br /><span></span>
 
+            Password:
+            <asp:TextBox runat="server"></asp:TextBox>
+            <br /><span></span>
+            <asp:button runat="server" Text="Sign in" OnClick="openWin2"></asp:button>
+            <br />
+            <asp:button runat="server" Onclick="openWin" Text="Sign up button"></asp:button>
+        
+        
+        </h3>
+<br />
+        <br />
+        <br />
+    <h2 style="height:550px; width:300px; border:double 6px; border-color:goldenrod;justify-content:right; font-family:'Freestyle Script'; font-size: 70px; background-color: #03253e;">
+        <img src="/unnamed.jpg" alt="logo" style="width:300px;height:400px;">
+        
+        Big Boss Bussiness
+    </h2>
+
+
+
+
+</div>
 </asp:Content>
+
