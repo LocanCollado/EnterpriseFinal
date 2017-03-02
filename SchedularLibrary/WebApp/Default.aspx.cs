@@ -24,7 +24,7 @@ namespace WebApp
         public void openWin2(object sender, EventArgs e)
         {
 
-            Response.Redirect("http://localhost:51538/WebForm1");
+            Response.Redirect("http://localhost:51538/Main.aspx");
         }
     }
 }
