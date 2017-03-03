@@ -25,17 +25,18 @@ namespace ExperimentalProc.DataBase
 
             StreamReader config = new StreamReader(Path.GetDirectoryName(Uri.UnescapeDataString(new UriBuilder(Assembly.GetAssembly(typeof(Server)).CodeBase).Path)) + "/DataBaseConfig.txt");
 
-            while (!config.EndOfStream ) {//load config functions
+            while (!config.EndOfStream)
+            {//load config functions
                 string[] line = config.ReadLine().Split(':');
 
-                if(line[0] == "DataBase Conection String") { DataBaseConectionString = line[1]; }//database conection string
+                if (line[0] == "DataBase Conection String") { DataBaseConectionString = line[1]; }//database conection string
 
                 //TODO add ADMIN config [ALPHA]
             }
 
             //DataBaseConectionString = "server=stusql;uid=lc10;database=EnterpriseFinalBBB;";//deadcode: replaced with config
             //config path: WebApp/Bin/DataBaseConfig.txt
-            
+
             try
             {
                 connection = new SqlConnection();
@@ -43,12 +44,12 @@ namespace ExperimentalProc.DataBase
                 Debug.WriteLine("Connection Made");
                 Debug.WriteLine(DataBaseConectionString);
             }
-            catch(SqlException excp)
+            catch (SqlException excp)
             {
                 Debug.WriteLine(DataBaseConectionString);
                 Debug.WriteLine("Connection Failed: " + excp);
             }
-            
+
         }
 
         //TODO: Change this to allow for defined parameters for insert, so it can serve an actual use
@@ -87,10 +88,10 @@ namespace ExperimentalProc.DataBase
             {
                 connection.Open();
                 cmd.Connection = connection;
-                cmd.CommandText = "INSERT INTO Rooms (Room_ID,Room_Name) VALUES("+ (int) 400+","+ "'Gyme Room'" +"); ";//alter this to be an insert statment
+                cmd.CommandText = "INSERT INTO Rooms (Room_ID,Room_Name) VALUES(" + (int)400 + "," + "'Gyme Room'" + "); ";//alter this to be an insert statment
                 cmd.ExecuteNonQuery();
             }
-            catch(SqlException excp)
+            catch (SqlException excp)
             {
                 Debug.WriteLine("Failed to run InsertIntoDataBase: " + excp);
                 connection.Close();
@@ -123,7 +124,7 @@ namespace ExperimentalProc.DataBase
             if (Course.Length <= 20)
             {
                 //Pre insert Month Logic Here:
-               CourseParse = Course;
+                CourseParse = Course;
             }
             else
             {
@@ -147,7 +148,7 @@ namespace ExperimentalProc.DataBase
             {
                 connection.Open();
                 cmd.Connection = connection;
-                cmd.CommandText = "INSERT INTO Classes(Class_ID,Class, Course) VALUES(" + (int)300 + "," + "'Gym'" + ","+"'15228'"+"); ";//alter this to be an insert statment
+                cmd.CommandText = "INSERT INTO Classes(Class_ID,Class, Course) VALUES(" + (int)300 + "," + "'Gym'" + "," + "'15228'" + "); ";//alter this to be an insert statment
                 cmd.ExecuteNonQuery();
             }
             catch (SqlException excp)
@@ -183,18 +184,19 @@ namespace ExperimentalProc.DataBase
              startTime(string): time of day following 12 Clock formated to fit "XX:XX" as a 5 character string, defines begining target time of day for upload into dataBase
              endTime(string): time of day following 12 Clock formated to fit "XX:XX" as a 5 character string, defines ending target time of day for upload into dataBase
              */
-        public bool InsertSchedualItem(string year, string[] month, string[] week, string[] day, string room, string course , string startTime, string endTime)
+        public bool InsertSchedualItem(string year, string[] month, string[] week, string[] day, string room, string course, string startTime, string endTime)
         {
 
             //Convert Year Logic
             int yearParse;
-            if(int.TryParse(year,out yearParse))
+            if (int.TryParse(year, out yearParse))
             {
                 //Pre insert Year Logic Here:
 
-            }else
+            }
+            else
             {
-                Debug.WriteLine("Failed to Parse <STRING_YEAR: "+ year +"> too INT");
+                Debug.WriteLine("Failed to Parse <STRING_YEAR: " + year + "> too INT");
                 return false;
             }
 
@@ -308,7 +310,8 @@ namespace ExperimentalProc.DataBase
                         {
                             isValid = true;//makes invalid if it is
                             break;
-                        } else
+                        }
+                        else
                         {
                             isValid = false;
                         }
@@ -324,7 +327,8 @@ namespace ExperimentalProc.DataBase
                         {
                             isValid = true;
                             break;
-                        }else
+                        }
+                        else
                         {
                             isValid = false;
                         }
@@ -364,11 +368,11 @@ namespace ExperimentalProc.DataBase
                 if (isValid)//if valid day
                 {
                     string[] badrows;
-                    string[] colDats = {null,null, null, null, null, null, CF.getDayByYear(curDay).getDayID().ToString(), null, null };
-                    if (!IsConflict("SELECT * FROM [EnterpriseFinalBBB].[dbo].[Schedule] WHERE year IN (" + yearParse +") AND Room_ID IN ("+roomParse+");", colDats, out badrows))//checks for conflicting days of year
+                    string[] colDats = { null, null, null, null, null, null, CF.getDayByYear(curDay).getDayID().ToString(), null, null };
+                    if (!IsConflict("SELECT * FROM [EnterpriseFinalBBB].[dbo].[Schedule] WHERE year IN (" + yearParse + ") AND Room_ID IN (" + roomParse + ");", colDats, out badrows))//checks for conflicting days of year
                     {
 
-                        colDats = new string[] { null,null, roomParse.ToString(), null, null, null, null, null, null };//checks for conflicting rooms in days of year
+                        colDats = new string[] { null, null, roomParse.ToString(), null, null, null, null, null, null };//checks for conflicting rooms in days of year
 
                         string queryValues = badrows[0];
                         for (int i = 1; i < badrows.Length; i++)
@@ -376,7 +380,7 @@ namespace ExperimentalProc.DataBase
                             queryValues += "," + badrows[i];
                         }
 
-                        if (!IsConflict("SELECT * FROM [EnterpriseFinalBBB].[dbo].[Schedule] WHERE List_ID IN (" + queryValues + ");", colDats, out badrows))
+                        if (!IsConflictPrimaryKey("SELECT * FROM [EnterpriseFinalBBB].[dbo].[Schedule] WHERE List_ID IN (" + queryValues + ");", colDats))
                         {
                             //TODO: find conflicting times [ALPHA]
                         }
@@ -384,12 +388,12 @@ namespace ExperimentalProc.DataBase
 
                     //add a line of text to the SQL command object that inserts the target data into the database : find valid days logic
                     cmd.CommandText += "INSERT INTO Schedule(Class_ID,Room_ID,year,month,week,day,Start_Time,End_Time)\n"
-                                    + "VALUES(" + courseParse + "," + roomParse + "," + yearParse + "," + CF.getMonthByDay(curDay).getMonthID() + "," + CF.getDayOfWeek(curDay) + "," + CF.getDayByYear(curDay).getDayID() +",'"+ startTime + "','" + endTime + "');\n";
+                                    + "VALUES(" + courseParse + "," + roomParse + "," + yearParse + "," + CF.getMonthByDay(curDay).getMonthID() + "," + CF.getDayOfWeek(curDay) + "," + CF.getDayByYear(curDay).getDayID() + ",'" + startTime + "','" + endTime + "');\n";
                 }//end if valid day
 
             }//end for days in year
 
-            
+
 
             try
             {
@@ -433,7 +437,7 @@ namespace ExperimentalProc.DataBase
 
             SqlCommand cmd = new SqlCommand(selectQuery, connection);
             List<string> tempBadRows = new List<string>();
-            
+
 
             try
             {
@@ -441,12 +445,13 @@ namespace ExperimentalProc.DataBase
                 SqlDataReader reader = cmd.ExecuteReader();
                 while (reader.Read())//runs for each row
                 {
-                    for(int i = 0; i < collumDats.Length; i++)//runs for each given collumn
+                    for (int i = 0; i < collumDats.Length; i++)//runs for each given collumn
                     {
-                        if ((collumDats[i] == reader.GetString(i)) && (collumDats[i] == null || collumDats[i] == "0"))
+                        if (!(string.IsNullOrEmpty(collumDats[i]) || collumDats[i].Equals("0")))
                         {
-                            tempBadRows.Add(reader.GetString(0));
-                            
+                            if (collumDats[i] == reader.GetValue(i).ToString())
+                                tempBadRows.Add(reader.GetValue(0).ToString());
+
                             break;
                         }
                     }//end for collumn
@@ -457,21 +462,60 @@ namespace ExperimentalProc.DataBase
             catch (SqlException excp)//currently dosen't warn do anything alert user if function didn't execute, or only partially execute probably want to fix that [TODO]
             {
                 Debug.WriteLine("Failed on dataReader: " + excp);
-                
+
                 connection.Close();
-                
+
             }
-            
-            if(tempBadRows.Count == 0)
+
+            if (tempBadRows.Count == 0)
             {
                 badRows = null;
                 return true;
-            } else
+            }
+            else
             {
                 badRows = tempBadRows.ToArray();
                 return false;
             }
-            
+
+        }
+
+        private bool IsConflictPrimaryKey(string selectQuery, string[] collumDats)
+        {
+            bool value = true;
+
+            SqlCommand cmd = new SqlCommand(selectQuery, connection);
+
+            try
+            {
+                connection.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())//runs for each row
+                {
+                    for (int i = 0; i < collumDats.Length; i++)//runs for each given collumn
+                    {
+                        if (!(string.IsNullOrEmpty(collumDats[i]) || collumDats[i].Equals("0")))
+                        {
+                            if (collumDats[i] == reader.GetValue(0).ToString())
+                                value = false;
+                            break;
+                        }
+                    }//end for collumn
+                }//end while row
+                reader.Close();
+                connection.Close();
+            }
+            catch (SqlException excp)//currently dosen't warn do anything alert user if function didn't execute, or only partially execute probably want to fix that [TODO]
+            {
+                Debug.WriteLine("Failed on dataReader: " + excp);
+
+                connection.Close();
+
+                value = false;
+
+            }
+
+            return value;
         }
 
 
