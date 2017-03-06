@@ -16,8 +16,8 @@ namespace ExperimentalProc.Calandar
         protected GregorianCalendar GC = new GregorianCalendar();
         protected int year;
 
-        protected List<Month> months;
-        protected List<Day> days;
+        static protected List<Month> months;
+        static protected List<Day> days;
 
 
         //Dan: !!!!!!TOUCH THIS AND I WILL SLAUGHTER YOU!!!!!!
@@ -114,6 +114,15 @@ namespace ExperimentalProc.Calandar
         public int getDayOfWeek(int dayID)
         {
             return ( (int) GC.GetDayOfWeek(new DateTime(this.year, getMonthByDay(dayID).getMonthID(), getMonthByDay(dayID).getDaysIntoMonth(getDayByYear(dayID)))) ) + 1;         
+        }
+
+        public Day this[int index] 
+        {
+            get
+            {
+                return days[index];
+            }
+            
         }
     }
 }

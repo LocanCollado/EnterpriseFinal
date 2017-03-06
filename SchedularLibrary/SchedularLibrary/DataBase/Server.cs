@@ -394,14 +394,14 @@ namespace ExperimentalProc.DataBase
                 if (isValid)//if valid day
                 {
                     string[] badrows;
-                    string[] colDats = { null, null, null, null, null, null, CF.getDayByYear(curDay).getDayID().ToString(), null, null };
+                    string[] colDats = { null, null, null, null, null, null, CF[curDay - 1].getDayID().ToString(), null, null };
                     if (!IsConflict("SELECT * FROM [EnterpriseFinalBBB].[dbo].[Schedule] WHERE year IN (" + yearParse + ") AND Room_ID IN (" + roomParse + ");", colDats, out badrows))//checks for conflicting days of year
                     {
 
                         colDats = new string[] { null, null, null, null, null, null, null, startTimeParse.ToString(), endTimeParse.ToString() };//checks for conflicting rooms in days of year
 
                         string[] rowGet;
-                        for (int i = 1; i < badrows.Length; i++)
+                        for (int i = 0; i < badrows.Length; i++)
                         {
                             if (IsConflictSingleRow("SELECT * FROM [EnterpriseFinalBBB].[dbo].[Schedule] WHERE List_ID IN (" + badrows[i] + ");", colDats, out rowGet))
                             {
@@ -425,7 +425,7 @@ namespace ExperimentalProc.DataBase
                     {
                         //add a line of text to the SQL command object that inserts the target data into the database : find valid days logic
                         cmd.CommandText += "INSERT INTO Schedule(Class_ID,Room_ID,year,month,week,day,Start_Time,End_Time)\n"
-                                        + "VALUES(" + courseParse + "," + roomParse + "," + yearParse + "," + CF.getMonthByDay(curDay).getMonthID() + "," + CF.getDayOfWeek(curDay) + "," + CF.getDayByYear(curDay).getDayID() + ",'" + startTimeParse.ToString() + "','" + endTimeParse.ToString() + "');\n";
+                                        + "VALUES(" + courseParse + "," + roomParse + "," + yearParse + "," + CF.getMonthByDay(curDay).getMonthID() + "," + CF.getDayOfWeek(curDay) + "," + CF[curDay - 1].getDayID() + ",'" + startTimeParse.ToString() + "','" + endTimeParse.ToString() + "');\n";
                     }
                 }//end if valid day
 
@@ -530,6 +530,7 @@ namespace ExperimentalProc.DataBase
                 connection.Open();
                 SqlDataReader reader = cmd.ExecuteReader();
 
+                
                 reader.Read();
 
                 for (int i = 0; i < collumDats.Length; i++)//runs for each given collumn

@@ -71,6 +71,15 @@ namespace ExperimentalProc.Calandar
 
         }
 
-        
+        public Day this[int index]
+        {
+            get
+            {
+                return Days[index];
+            }
+
+        }
+
+
     }
 }
