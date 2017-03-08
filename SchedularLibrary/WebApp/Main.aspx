@@ -103,6 +103,8 @@ body {font-family: Verdana,sans-serif;}
     <li class="prev"><<</li>
     <li class="next">>></li>
     <li style="text-align:center">
+        <form runat="server"><% this.Month.InnerText = GetMonth(1); %></form>
+        <output id="Month" runat="server"></output>        
       <br>
       <span style="font-size:18px">2016</span>
     </li>
@@ -121,7 +123,7 @@ body {font-family: Verdana,sans-serif;}
     
 
 <ul class="days">  
-  <li>1</li>
+  <li>1<output id="week1day1" runat="server"></output></li>
   <li>2</li>
   <li>3</li>
   <li>4</li>
@@ -156,7 +158,7 @@ body {font-family: Verdana,sans-serif;}
 
 
    <h3>
-      <asp:TextBox runat="server"></asp:TextBox>
+      
    </h3>
 
 
