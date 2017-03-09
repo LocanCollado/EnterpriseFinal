@@ -1,1 +1,0 @@
-CREATE TABLE Enrollment( FirstName nvarchar(20),LastName nvarchar(20), UserID char(4));
